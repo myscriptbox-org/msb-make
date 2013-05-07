@@ -27,7 +27,7 @@ fi
 
 debControl="$CORE_FOLDER/templates/deb-manifest/control"
 cat "$debControl" | sed -e 's|=package=|'"$base"'|g' \
-                        -e 's|=author_name=|'"${author_name}"'|g' \
+                        -e 's|=name_signature=|'"${name_signature}"'|g' \
                         -e 's|=synopsis=|'"$synopsis"'|g'  \
                         -e 's|=email_signature=|'"${email_signature}"'|g'  \
                         -e 's|=deb_section=|'"${deb_section}"'|g' \

@@ -18,7 +18,7 @@ debChangeLog="$CORE_FOLDER/templates/deb-manifest/changelog"
 cat "$debChangeLog" | sed -e 's|=package=|'"$base"'|g' \
 			-e 's|=version=|'"${version}-${release}"'|g' \
                         -e 's|=release=|'"$release"'|g' \
-                        -e 's|=author_name=|'"${author_name}"'|g' \
+                        -e 's|=name_signature=|'"${name_signature}"'|g' \
                         -e 's|=email_signature=|'"${email_signature}"'|g' \
                         -e 's|=urgency=|'"$urgency"'|g' \
                         -e 's|=build_date=|'"$buildDate"'|g' 
