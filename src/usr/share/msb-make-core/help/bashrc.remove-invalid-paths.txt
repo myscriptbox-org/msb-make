@@ -1,0 +1,3 @@
+This command checks if all the existing paths registered are still valid, and removes the invalid ones. Example:{br}
+{program} bashrc -remove-invalid-paths
+

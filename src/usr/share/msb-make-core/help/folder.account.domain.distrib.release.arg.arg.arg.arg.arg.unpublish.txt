@@ -1,0 +1,5 @@
+This command unpublishes a folder from a remote server. Synopsis:{br}
+{program} folder.account.domain.distrib.release [folder] [account] [domain] [distrib] [release] -unpublish{br}
+Example:{br}
+{program} folder.account.domain.distrib.release myprogram john@doe.com garagesoft.com ubuntu precise -unpublish
+

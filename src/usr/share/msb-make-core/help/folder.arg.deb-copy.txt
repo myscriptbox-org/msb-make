@@ -1,0 +1,3 @@
+This command is used by the {b}-build{/b} command to generate the readme file, generate the debian manifest files, and copy the script files to the DEBIAN package folder. Example:{br}
+{program} folder myprogram -deb-copy{br}
+

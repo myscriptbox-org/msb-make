@@ -1,0 +1,3 @@
+This command generates the readme page in markdown (.md) format. It is called by the {b}build{/b} command. Example:{br}
+{program} folder myprogram -generate-readme
+

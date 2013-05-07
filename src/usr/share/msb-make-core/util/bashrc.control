@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+#-------------------------------------------------------
+# Written by Erik Poupaert
+# Phnom Penh, Cambodia, May 2013
+# Licensed under the General Public License (GPL)
+#-------------------------------------------------------
+
+function bashrc_control
+{
+	folder="$1"
+	operation="$2"
+
+	if [ ! "$operation" = 'add' ] && [ ! "$operation" = 'delete' ] ; then
+		echo "invalid operation '$operation'" >&2
+		exit 1
+	fi
+
+	source "$UTIL_FOLDER/folder.assert-exists"
+
+	if [ "$operation" = 'add' ]  ; then
+		folder_assert_exists "$folder"
+	fi
+
+	if [ "$folder" = "." ] ; then
+		folder="$PWD"
+	else
+		if [ ! ${folder:0:1} = "/" ]; then
+			folder="$PWD/$folder"
+		fi
+	fi
+
+	base=$(basename "$folder")
+
+	pathFolder="$folder/src/usr/bin"
+
+	if [ "$operation" = 'add' ]  ; then
+		folder_assert_exists "$pathFolder"
+	fi
+
+	command="export PATH=\$PATH:$pathFolder  # msb-make"
+
+	tmpFile="/tmp/.$$"
+	cat ~/.bashrc | grep -v "$command" > "$tmpFile"
+	cp -f "$tmpFile" ~/.bashrc
+	if [ "$operation" = 'add' ] ; then
+		echo "$command" >> ~/.bashrc
+	fi
+}
+

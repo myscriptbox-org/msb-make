@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+#-------------------------------------------------------
+# Written by Erik Poupaert
+# Phnom Penh, Cambodia, March 2013
+# Licensed under the General Public License (GPL)
+#-------------------------------------------------------
+
+source "$UTIL_FOLDER/args.fix-whitespace"
+folder="$1"
+source "$UTIL_FOLDER/folder.assert-exists"
+folder_assert_exists "$folder"
+base=$(basename "$folder")
+router="$2"
+if [ ! -d "$CORE_FOLDER/templates/routers/$router" ] ; then
+        echo "Invalid router '$router'" >& 2
+        exit 1
+fi
+
+if [ -f "$folder/.router.folders" ] || [ -f "$folder/.router.files" ] ; then
+        echo "ERROR: router already populated. Remove existing router first to re-populate" >&2
+        exit 1
+fi
+
+templateFolder="$CORE_FOLDER/templates/routers/$router/core"
+cp -Rn "$templateFolder"/* "$folder/src/usr/share/${base}-core"
+program="$folder/src/usr/bin/${base}"
+if [ ! -f "$program" ] || [ $(stat -c%s "$program") = "0" ] ; then
+        cp "$CORE_FOLDER/templates/routers/$router/program" "$program"
+fi
+chmod a+x "$program"
+
+#Write installation log file router.files
+rm -f "$folder/.router.files"
+
+read sha256 remainder < <(sha256sum "$program")
+prgBase=$(basename "$program")
+echo "bin,$prgBase,$sha256" >> "$folder/.router.files"
+
+#determine how many parent folders to cut
+parentsToCut=$(grep -o "/" <<<"$templateFolder" | wc -l)
+parentsToCut=$((parentsToCut+2))
+
+while read file ; do
+        read sha256 remainder < <(sha256sum "$file")
+        scriptBase=$(echo "$file" | cut -d"/" -f$parentsToCut-)
+        echo "core,$scriptBase,$sha256" >> "$folder/.router.files"
+done < <(find "$templateFolder" -type f ) 
+
+#Write installation log file router.folders
+rm -f "$folder/.router.folders"
+
+while read installFolder ; do
+        echo "$installFolder" >> "$folder/.router.folders"
+done < <(find "$templateFolder" -type d | cut -d"/" -f$parentsToCut- | sed '/^$/d')
+

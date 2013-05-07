@@ -1,0 +1,5 @@
+This command adds a folder to the ~/.bashrc, so that you can execute the program in the folder without specifying its path. Example:{br}
+{program} bashrc -add-path gpg-man{br}
+This example will add the gpg-man folder to your path. You will need to source .bashrc (or re-open the terminal) again, for the changes to take effect:{br}
+source ~/.bashrc
+

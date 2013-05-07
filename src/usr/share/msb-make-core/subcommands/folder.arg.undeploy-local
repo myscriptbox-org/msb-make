@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+#-------------------------------------------------------
+# Written by Erik Poupaert
+# Phnom Penh, Cambodia, March 2013
+# Licensed under the General Public License (GPL)
+#-------------------------------------------------------
+
+source "$UTIL_FOLDER/args.fix-whitespace"
+folder="$1"
+source "$UTIL_FOLDER/folder.assert-exists"
+folder_assert_exists "$folder"
+base=$(basename "$folder")
+user=$(whoami)
+
+if [ ! "$user" = 'root' ] ; then
+        echo "ERROR: this command must be executed as root (e.g. use 'sudo')" >&2
+        exit 1
+fi
+
+#bin files
+while read file ; do
+        target="/usr/bin/$file"
+        if [ -f "$target" ] ; then
+                rm -f "$target"
+        fi
+done < <(ls "$folder/src/usr/bin")
+
+#etc files
+targetEtcFolder="/etc/$base.d"
+if [ -d "$targetEtcFolder" ] ; then
+        rm -rf "$targetEtcFolder"
+fi
+
+#scriptbox 
+targetScriptBox="/usr/share/${base}-core"
+if [ -d "$targetScriptBox" ] ; then
+        rm -rf "$targetScriptBox"
+fi
+

@@ -1,0 +1,1 @@
+{program} scaffolds a script folder, optionally populates it with a router and packages it for publication to a debian repository.

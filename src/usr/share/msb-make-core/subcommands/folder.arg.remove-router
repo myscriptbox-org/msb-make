@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+#-------------------------------------------------------
+# Written by Erik Poupaert
+# Phnom Penh, Cambodia, April 2013
+# Licensed under the General Public License (GPL)
+#-------------------------------------------------------
+
+source "$UTIL_FOLDER/args.fix-whitespace"
+folder="$1"
+source "$UTIL_FOLDER/folder.assert-exists"
+folder_assert_exists "$folder"
+base=$(basename "$folder")
+
+if [ ! -f "$folder/.router.folders" ] ; then
+        echo "ERROR: cannot find router installation log file '$folder/.router.folders'" >&2
+        echo "There may be no router installed" >&2
+        exit 1
+fi
+
+if [ ! -f "$folder/.router.files" ] ; then
+        echo "ERROR: cannot find router installation log file '$folder/.router.files'" >&2
+        exit 1
+fi
+
+while read line ; do
+        IFS=',' read installFolder file sha256Installed <<< "$line"
+        if [ "$installFolder" = 'bin' ] ; then
+                path="$folder/src/usr/bin/$file"
+        elif [ "$installFolder" = 'core' ] ; then
+                path="$folder/src/usr/share/${base}-core/$file"
+        else
+                continue
+        fi
+        read sha256New remainder < <(sha256sum "$path")
+        if [ "$sha256Installed" = "$sha256New" ] ; then
+                rm -f "$path"
+        fi
+done < "$folder/.router.files"
+
+while read installFolder ; do
+        path="$folder/src/usr/share/${base}-core/$installFolder"
+        files=$(ls -A $path)
+        if [ "$files" = "" ] ; then
+                rm -rf "$path"
+        fi
+done < "$folder/.router.folders"
+
+rm -f "$folder/.router.files"
+rm -f "$folder/.router.folders"
+

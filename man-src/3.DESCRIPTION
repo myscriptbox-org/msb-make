@@ -1,0 +1,23 @@
+{program} manages the following object paths:{br}
+
+[[bashrc]]
+Programs on the paths registered in the ~/.bashrc file can be invoked directly. Use this object path to manage the programs registered to be executable from a development environment.
+
+[[folder]]
+This is the main object to manage. The program is a folder which consists of standardized subfolders and files.
+
+[[folder.account.domain.distrib.release]]
+Use this path to manage the publication of a program folder.
+
+[[folder.conf-field]]
+Use this path to manage the configuration fields in the 'build.conf' file in a folder.
+
+[[folder.release]]
+This path is used automatically by {program} during the publication of a program folder.
+
+[[folder.router]]
+The main program is located in {b}src/usr/bin{/b}. It will invoke the router and according to the object path and action supplied, execute a subordinate script located in {b}src/usr/share/[program]-core/subcommands{/b}. Use this path to manage which router to use for this task. The default router is {b}bash-default{/b}.
+
+[[folder.version]]
+Use this path to manage the version of the program folder.
+

@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+#-------------------------------------------------------
+# Written by Erik Poupaert
+# Phnom Penh, Cambodia, May 2013
+# Licensed under the General Public License (GPL)
+#-------------------------------------------------------
+
+source "$UTIL_FOLDER/args.fix-whitespace"
+folder="$1"
+source "$UTIL_FOLDER/folder.assert-exists"
+folder_assert_exists "$folder"
+base=$(basename "$folder")
+release="$2"
+
+if [ ! ${folder:0:1} = "/" ] ; then
+        folder=$(dirname "$PWD/$folder") 
+fi
+
+parentFolder="$folder"
+
+while read file; do 
+        rm -f "$file"
+done < <(find "$parentFolder"  -maxdepth 1 \
+                -regextype sed -regex ".*${base}_.*-$release.*" | \
+                 grep -P '\.(tar\.gz$|dsc|deb|changes)'
+        )
+

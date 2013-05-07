@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+#-------------------------------------------------------
+# Written by Erik Poupaert
+# Phnom Penh, Cambodia, March 2013
+# Licensed under the General Public License (GPL)
+#-------------------------------------------------------
+
+source "$UTIL_FOLDER/args.fix-whitespace"
+folder="$1"
+source "$UTIL_FOLDER/folder.assert-exists"
+folder_assert_exists "$folder"
+base=$(basename "$folder")
+
+#generate readme
+$THIS_SCRIPT folder "$folder" -generate-readme > "$folder/README.md"
+
+#copy folders
+src="$folder/src"
+build="$folder/debian/$base"
+dirs=$($THIS_SCRIPT folder "$folder" -generate-deb-dirs)
+for dir in $dirs; do
+        if [ -d "$src/$dir" ] ; then
+                mkdir -p "$build/$dir"
+                cp -R "$src/$dir"/* "$build/$dir"
+        fi
+done
+
+source "$folder/build.conf"
+
+#generate man page
+mkdir -p "$build/usr/share/man"
+$THIS_SCRIPT folder "$folder" -generate-man-page | \
+        gzip -c  > "$build/usr/share/man/man${man_section}/${base}.${man_section}.gz"
+

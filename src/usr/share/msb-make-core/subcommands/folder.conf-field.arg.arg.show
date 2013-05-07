@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+#-------------------------------------------------------
+# Written by Erik Poupaert
+# Phnom Penh, Cambodia, March 2013
+# Licensed under the General Public License (GPL)
+#-------------------------------------------------------
+
+source "$UTIL_FOLDER/args.fix-whitespace"
+folder="$1"
+source "$UTIL_FOLDER/folder.assert-exists"
+folder_assert_exists "$folder"
+conf="$folder/build.conf"
+source "$UTIL_FOLDER/file.assert-exists"
+file_assert_exists "$conf"
+field="$2"
+cat "$conf" | grep "export *$field=\".*\"" | sed "s/export $field=\"\(.*\)\"/\1/"
+

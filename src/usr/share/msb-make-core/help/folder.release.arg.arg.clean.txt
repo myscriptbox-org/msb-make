@@ -1,0 +1,3 @@
+This command removes the packages built. Example:{br}
+{program} folder.release myscript precise -clean
+

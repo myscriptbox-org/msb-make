@@ -1,0 +1,3 @@
+This command lists the files inside the program folder. Example:{br}
+{program} folder myscript -show-files
+

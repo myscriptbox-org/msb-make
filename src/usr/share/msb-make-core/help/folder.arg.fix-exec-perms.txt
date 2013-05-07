@@ -1,0 +1,3 @@
+This command fixes all the execute permissions in the subcommands folder. Example:{br}
+{program} folder myscript -fix-exec-perms
+

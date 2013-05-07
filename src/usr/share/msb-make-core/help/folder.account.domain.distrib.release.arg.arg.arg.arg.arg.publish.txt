@@ -1,0 +1,5 @@
+This command publishes a folder to a remote repository. Synopsis:{br}
+{program} folder.account.domain.distrib.release [folder] [account] [domain] [distrib] [release] -publish{br}
+Example:{br}
+{program} folder.account.domain.distrib.release myprogram john@doe.com garagesoft.com ubuntu precise -publish{br}
+

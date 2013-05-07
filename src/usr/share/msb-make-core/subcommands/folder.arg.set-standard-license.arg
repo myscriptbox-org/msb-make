@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+#-------------------------------------------------------
+# Written by Erik Poupaert
+# Phnom Penh, Cambodia, March 2013
+# Licensed under the General Public License (GPL)
+#-------------------------------------------------------
+
+source "$UTIL_FOLDER/args.fix-whitespace"
+folder="$1"
+source "$UTIL_FOLDER/folder.assert-exists"
+folder_assert_exists "$folder"
+base=$(basename "$folder")
+license="$2"
+source "$UTIL_FOLDER/file.assert-exists"
+licenseFile="$CORE_FOLDER/templates/licenses/$license"
+file_assert_exists "$licenseFile"
+cp -f "$licenseFile" "$folder/LICENSE"
+cp -f "$CORE_FOLDER/templates/licenses/GPL" "$folder/src/usr/share/${base}-core/LICENSE"
+$THIS_SCRIPT folder.conf-field "$folder" "license" -set "$license" > /dev/null
+

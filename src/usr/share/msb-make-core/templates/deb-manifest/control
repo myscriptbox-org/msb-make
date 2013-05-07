@@ -1,0 +1,14 @@
+Source: =package=
+Section: =deb_section=
+Priority: =deb_priority=
+Maintainer: =author_name= <=email_signature=>
+Build-Depends: debhelper (>= 7), build-essential, msb-make =deb_other_build_dependencies=
+Standards-Version: 3.9.3.1
+Homepage: =home_page=
+
+Package: =package=
+Architecture: all
+Depends: =deb_dependencies=
+Replaces: =deb_replaces=
+Description: =synopsis=
+

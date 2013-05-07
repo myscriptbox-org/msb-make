@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+#-------------------------------------------------------
+# Written by Erik Poupaert
+# Phnom Penh, Cambodia, March 2013
+# Licensed under the General Public License (GPL)
+#-------------------------------------------------------
+
+source "$UTIL_FOLDER/args.fix-whitespace"
+folder="$1"
+source "$UTIL_FOLDER/folder.assert-exists"
+folder_assert_exists "$folder"
+conf="$folder/build.conf"
+source "$UTIL_FOLDER/file.assert-exists"
+file_assert_exists "$conf"
+field="$2"
+source "$UTIL_FOLDER/conf-field.validate"
+conf_field_validate "$field"
+value="$3"
+
+if [ "$value" = "null" ] ; then
+        value=""
+# |null => null and ||null => |null and |||null => ||null and so on
+elif [ ! $(echo "$value" | grep -P '^\|+null$') = "" ] ; then
+        value=$(echo "$value" | sed 's/|\(.*\)/\1/')
+fi
+
+tmpFile="/tmp/conf.$$"
+cat "$conf" | sed "s/export $field=\"\(.*\)\"/export $field=\"$value\"/" > "$tmpFile"
+mv "$tmpFile" "$conf"
+

@@ -1,0 +1,4 @@
+This command removes a folder from the execution path. Example:{br}
+{command} bashrc -remove-path myprogram{br}
+The 'myprogram' argument should be a folder containing a script.
+

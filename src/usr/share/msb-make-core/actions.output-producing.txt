@@ -1,0 +1,16 @@
+show
+show-files
+show-paths
+show-version
+show-license
+show-conf-fields
+show-man-page
+license-exists
+generate-man-page
+generate-readme
+generate-deb-changelog
+generate-deb-control
+generate-deb-dirs
+publish
+unpublish
+

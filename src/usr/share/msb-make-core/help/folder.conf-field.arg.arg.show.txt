@@ -1,0 +1,3 @@
+This command shows the value of a configuration field in a folder. Example:{br}
+{program} folder.conf-field myscript email_signature -show
+

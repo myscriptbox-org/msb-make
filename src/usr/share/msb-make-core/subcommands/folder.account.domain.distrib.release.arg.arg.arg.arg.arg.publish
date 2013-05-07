@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+#-------------------------------------------------------
+# Written by Erik Poupaert
+# Phnom Penh, Cambodia, March 2013
+# Licensed under the General Public License (GPL)
+#-------------------------------------------------------
+
+source "$UTIL_FOLDER/args.fix-whitespace"
+folder="$1"
+source "$UTIL_FOLDER/folder.assert-exists"
+folder_assert_exists "$folder"
+base=$(basename "$folder")
+if [ ${folder:0:1} = '/' ] ; then
+        absoluteFolder="$folder"
+else
+        absoluteFolder="$PWD/$folder"
+fi
+parentFolder=$(dirname "$absoluteFolder")
+account="$2"
+domain="$3"
+distrib="$4"
+release="$5"
+version=$($THIS_SCRIPT folder "$folder" -show-version)
+
+deb-publish account.domain.distrib.release.package.version \
+         "$account" "$domain" "$distrib" "$release" "$base" "$version" -add "$parentFolder"
+

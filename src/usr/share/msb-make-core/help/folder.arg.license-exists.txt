@@ -1,0 +1,4 @@
+This command checks if the folder contains a license file. Example:{br}
+{program} folder myprogram -license-exists{br}
+This command returns 'yes' if the license file exists and 'no' if it does not.
+

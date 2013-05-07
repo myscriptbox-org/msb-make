@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+#-------------------------------------------------------
+# Written by Erik Poupaert
+# Phnom Penh, Cambodia, March 2013
+# Licensed under the General Public License (GPL)
+#-------------------------------------------------------
+
+source "$UTIL_FOLDER/args.fix-whitespace"
+folder="$1"
+source "$UTIL_FOLDER/folder.assert-exists"
+folder_assert_exists "$folder"
+newFolder="$2"
+source "$UTIL_FOLDER/folder.assert-not-exists"
+folder_assert_not_exists "$newFolder"
+
+base=$(basename "$folder")
+newBase=$(basename "$newFolder")
+
+#---------------------------------
+# SRC
+#---------------------------------
+
+src="$folder/src"
+mv "$src/etc/$base.d" "$src/etc/$newBase.d"
+bin="$src/usr/bin"
+program="$bin/$base"
+mv "$bin/$base" "$bin/$newBase"
+core="$src/usr/share/$base-core"
+newCore="$src/usr/share/$newBase-core"
+mv "$core" "$newCore"
+
+#---------------------------------
+# ROOT
+#---------------------------------
+mv "$folder" "$newFolder"
+

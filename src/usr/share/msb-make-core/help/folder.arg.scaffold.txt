@@ -1,0 +1,23 @@
+This command scaffolds a given program folder. If the folder does not exist, the command will create it. It creates:{br}
+sample: the main folder{br}
+sample/build.conf: the build configuration file{br}
+sample/man-src: the main manpage source folder{br}
+sample/man-src/3.DESCRIPTION: manpage section{br}
+sample/man-src/1.NAME: manpage section{br}
+sample/man-src/7.FILES: manpage section{br}
+sample/man-src/6.EXIT-STATUS: manpage section{br}
+sample/man-src/5.ENVIRONMENT: manpage section{br}
+sample/install: installer script folder{br}
+sample/install/postinst: the script to run after installation{br}
+sample/install/postrm: the script to run after uninstallation{br}
+sample/src: the source folder{br}
+sample/src/usr: folder that matches the '/usr' folder on a linux system{br}
+sample/src/usr/bin: main program/entry point folder{br}
+sample/src/usr/bin/sample: the main program itself{br}
+sample/src/usr/share: folder that matches the '/share' folder on a linux system{br} 
+sample/src/usr/share/sample-core: the main scriptbox folder{br}
+sample/src/usr/share/sample-core/help: the help files for the scriptbox commands in the program{br}
+sample/src/etc: matches the '/etc' folder on a linux system{br}
+sample/src/etc/sample.d: the configuration folder for the program{br}
+
+

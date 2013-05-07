@@ -1,0 +1,11 @@
+This command sets the value for a configuration field in the 'build.conf' file. Example:{br}
+{program} folder.conf-field myscript author_name -set "John Doe"{br}
+You can also just edit the 'build.conf' file and set the values of the fields directly.
+To set a blank value, supply the value 'null'. Example:{br}
+{program} folder.conf-field myscript author_name -set null{br}
+To set a 'null' value, supply the value '|null'. Example:{br}
+{program} folder.conf-field myscript author_name -set '|null'{br}
+To set a '|null' value, supply the value '||null'. Example:{br}
+{program} folder.conf-field myscript author_name -set '||null'{br}
+To set a value of 'null' preceded by k times '|', prefix the '|' character k+1 times.
+

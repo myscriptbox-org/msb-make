@@ -1,0 +1,4 @@
+This command populates a folder with a standard router. Example:{br}
+{program} folder.router myscript bash-default -populate
+
+

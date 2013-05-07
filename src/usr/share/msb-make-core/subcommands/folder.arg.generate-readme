@@ -1,0 +1,100 @@
+#!/usr/bin/env bash
+#-------------------------------------------------------
+# Written by Erik Poupaert
+# Phnom Penh, Cambodia, March 2013
+# Licensed under the General Public License (GPL)
+#-------------------------------------------------------
+
+source "$UTIL_FOLDER/args.fix-whitespace"
+folder="$1"
+source "$UTIL_FOLDER/folder.assert-exists"
+folder_assert_exists "$folder"
+folderBase=$(basename "$folder")
+
+manFolder="$folder/man-src"
+
+source "$folder/build.conf"
+
+function replace_template_vars
+{
+	sed  -e "s/{program}/"**$program**"/g" \
+	-e "s/{author_name}/$author_name/g" \
+	-e "s/{author_email}/$author_email/g" \
+	-e 's/{b}/**/g' -e 's|{/b}|**|g' \
+	-e 's/{i}/_/g' -e 's|{/i}|_|g' \
+	-e 's/\[\[\(.*\)\]\]/### \1/g' \
+	-e 's/{br}/  /'
+}
+
+synopsisGenerated='false'
+optionsGenerated='false'
+
+program="$folderBase"
+#main title
+echo "# man page for $program."
+#print sections
+while read fileName; do
+        #determine section and section number
+	base=$(basename "$fileName")
+	sectionNumber=${base%%.*}
+	title=${base#*.}
+
+        #print synopsis
+        if [ $sectionNumber -gt 1 ] && [ "$synopsisGenerated" = 'false' ] ; then
+                echo "## SYNOPSIS"
+                echo "**$program** [objectPath] [ objectId1 ... objectIdN ] -action [ actionArg1 .. actionArgM]"
+                echo
+                synopsisGenerated='true'
+        fi
+
+        #print options
+        if [ $sectionNumber -gt 3 ] && [ "$optionsGenerated" = 'false' ] ; then
+                helpFolder="$folder/src/usr/share/${program}-core/help"
+                echo "## OPTIONS"
+                echo
+                echo "### --help"
+                echo "shows the general help paragraph."
+                echo
+                echo '### [objectpath] --help'
+                echo "shows general help for the object path."
+                echo
+                echo "### --version"
+                echo "shows the program's version."
+                echo
+                echo "### --license"
+                echo "shows the program's license."
+                echo
+                while read objectPath; do
+                        while read f; do
+	                synopsis=$(echo "$f" | sed -e 's/^'$objectPath'\.//' | sed -e 's/^arg\./[obj] /' |  \
+		                 sed -e 's/\.txt$//')
+                        synopsisNoArgs=$(echo "$synopsis" | sed -e 's/\.arg$//' |  sed -e 's/\.args$//')
+                        #if $synopsisNoArgs still has a dot, it belongs to a longer objectPath
+                        dotFound=$(echo "$synopsisNoArgs" | grep -E '\.')
+                        if [ "$dotFound" = "" ] ; then
+                                synopsis=$(echo "$synopsis" | sed -e 's/\.arg$/ [arg]/' |  sed -e 's/\.args$/ [args]/')
+                                subCommand=$(echo "$synopsis" | sed -e 's/\[.*\] //g' -e 's/\[.*\]//g')
+                                synopsis=$(echo "$synopsis" | sed -e 's/'"$subCommand"'/-'"$subCommand"'/')
+	                        echo "### $objectPath $synopsis"
+	                        cat "$helpFolder/$f" | replace_template_vars
+                        fi
+                        done < <(find "$helpFolder" -type f -exec basename {} \; | grep -e "^$objectPath\.")
+                done < <(find "$helpFolder" -type f -exec basename {} \; | \
+                        sed 's/\.txt$//' | sed 's/\.arg$//' | sed 's/\.args$//' | sed 's/\(.*\)\..*$/\1/' | \
+                         sed 's/\.arg$//' | sort | uniq)
+                optionsGenerated='true'
+        fi
+        #print the current section
+	echo "## $title "
+	cat "$fileName" | replace_template_vars
+done < <(find "$manFolder" -mindepth 1 -maxdepth 1 -type f | sort )
+#generate author section
+echo "## AUTHOR"
+echo "${author_name} <${author_email}>"
+echo 
+echo "## REPORTING-BUGS"
+echo "Report bugs to: ${report_bugs}"
+echo 
+echo "# COPYRIGHT"
+echo "Licensed under ${license}"
+

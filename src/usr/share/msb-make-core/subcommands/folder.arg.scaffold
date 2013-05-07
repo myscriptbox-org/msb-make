@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+#-------------------------------------------------------
+# Written by Erik Poupaert
+# Phnom Penh, Cambodia, March 2013
+# Licensed under the General Public License (GPL)
+#-------------------------------------------------------
+
+source "$UTIL_FOLDER/args.fix-whitespace"
+folder="$1"
+mkdir -p "$folder"
+
+base=$(basename "$folder")
+
+#---------------------------------
+# ROOT
+#---------------------------------
+
+cp -n "$CORE_FOLDER/templates/build.conf" "$folder/build.conf"
+
+#---------------------------------
+# install
+#---------------------------------
+
+mkdir -p "$folder/install"
+cp -n "$CORE_FOLDER/templates/install"/* "$folder/install"
+
+#---------------------------------
+# MAN-SRC
+#---------------------------------
+
+manSrc="$folder/man-src"
+mkdir -p "$manSrc"
+touch "$manSrc/1.NAME"
+touch "$manSrc/3.DESCRIPTION"
+touch "$manSrc/5.ENVIRONMENT"
+touch "$manSrc/6.EXIT-STATUS"
+touch "$manSrc/7.FILES"
+
+#---------------------------------
+# SRC
+#---------------------------------
+src="$folder/src"
+mkdir -p "$src"
+mkdir -p "$src/etc"
+mkdir -p "$src/etc/$base.d"
+mkdir -p "$src/usr"
+bin="$src/usr/bin"
+mkdir -p "$bin"
+program="$bin/$base"
+touch "$program"
+chmod a+x "$program"
+mkdir -p "$src/usr/share"
+core="$src/usr/share/$base-core"
+mkdir -p "$core"
+mkdir -p "$core/help"
+

@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+#-------------------------------------------------------
+# Written by Erik Poupaert
+# Phnom Penh, Cambodia, March 2013
+# Licensed under the General Public License (GPL)
+#-------------------------------------------------------
+
+source "$UTIL_FOLDER/args.fix-whitespace"
+folder="$1"
+source "$UTIL_FOLDER/folder.assert-exists"
+folder_assert_exists "$folder"
+base=$(basename "$folder")
+source "$folder/build.conf"
+synopsis=$(cat "$folder/man-src/1.NAME" | sed  -e "s/{program}/$base/g" \
+		        -e 's/{b}//g' -e 's|{/b}||g' \
+		        -e 's/{i}//g' -e 's|{/i}||g' \
+		        -e 's/{br}//'
+)
+
+if [ "$synopsis" = "" ] ; then
+	synopsis="$base"
+fi
+
+if [ ! "$deb_other_build_dependencies" = "" ] ; then
+	deb_other_build_dependencies=" ,${deb_other_build_dependencies}"
+fi
+
+debControl="$CORE_FOLDER/templates/deb-manifest/control"
+cat "$debControl" | sed -e 's|=package=|'"$base"'|g' \
+                        -e 's|=author_name=|'"${author_name}"'|g' \
+                        -e 's|=synopsis=|'"$synopsis"'|g'  \
+                        -e 's|=email_signature=|'"${email_signature}"'|g'  \
+                        -e 's|=deb_section=|'"${deb_section}"'|g' \
+                        -e 's|=deb_priority=|'"${deb_priority}"'|g' \
+                        -e 's|=deb_other_build_dependencies=|'"${deb_other_build_dependencies}"'|g' \
+                        -e 's|=home_page=|'"${home_page}"'|g' \
+                        -e 's|=deb_dependencies=|'"${deb_dependencies}"'|g' \
+                        -e 's|=deb_replaces=|'"${deb_replaces}"'|g' 
+

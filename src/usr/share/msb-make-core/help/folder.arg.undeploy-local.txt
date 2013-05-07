@@ -1,0 +1,4 @@
+This command removes a rapid local deployment of a folder. Example:{br}
+sudo {program} folder myscript -undeploy-local{br}
+This command must be executed as root.
+

@@ -1,0 +1,5 @@
+This command sets a standard license on the program. Example:{br}
+{program} folder myscript -set-standard-license GPL{br}
+This command installs the GPL license file inside the program. If you need to install a custom license file, manually copy the custom license to the program's core folder. The command also inscribes the license name in the 'build.conf' file. You can verify the license inscribed in the 'build.conf' file with the command:{br}
+{program} folder.conf-field myscript license -show{br}
+

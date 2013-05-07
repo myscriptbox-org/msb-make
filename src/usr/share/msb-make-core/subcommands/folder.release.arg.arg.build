@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+#-------------------------------------------------------
+# Written by Erik Poupaert
+# Phnom Penh, Cambodia, May 2013
+# Licensed under the General Public License (GPL)
+#-------------------------------------------------------
+
+source "$UTIL_FOLDER/args.fix-whitespace"
+folder="$1"
+source "$UTIL_FOLDER/folder.assert-exists"
+folder_assert_exists "$folder"
+base=$(basename "$folder")
+
+release="$2"
+
+build="$folder/debian"
+
+if [ -d "$build" ] ; then
+	rm -rf "$build"
+fi
+
+mkdir "$folder/debian"
+
+cp -R "$CORE_FOLDER/templates/deb-manifest"/* "$build"
+
+#fix:
+#-------------
+$THIS_SCRIPT folder.release "$folder" "$release" -generate-deb-changelog > "$build/changelog"
+$THIS_SCRIPT folder "$folder" -generate-deb-control > "$build/control" 
+$THIS_SCRIPT folder "$folder" -generate-deb-dirs > "$build/$base.dirs"
+cp "$folder/install/postinst" "$build/$base.postinst"
+cp "$folder/install/postrm" "$build/$base.postrm"
+
+#execute the build:
+currPWD="$PWD"
+cd "$folder"
+fakeroot -- dpkg-buildpackage -a$architecture -F -I.git > /dev/null
+cd "$currPWD"
+rm -rf "$build"
+rm "$folder/build-stamp"
+

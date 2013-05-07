@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+#-------------------------------------------------------
+# Written by Erik Poupaert
+# Phnom Penh, Cambodia, March 2013
+# Licensed under the General Public License (GPL)
+#-------------------------------------------------------
+
+while read path ; do
+	if [ ! -d "$path" ] ; then
+		$THIS_SCRIPT bashrc -unregister "$path" > /dev/null
+		echo "removed invalid path '$path'"
+	fi
+
+done < <($THIS_SCRIPT bashrc -show-paths)
+echo "source ~/.bashrc (or re-open the terminal again) to make the change effective"
+

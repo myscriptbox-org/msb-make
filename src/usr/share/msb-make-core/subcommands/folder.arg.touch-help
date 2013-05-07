@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+#-------------------------------------------------------
+# Written by Erik Poupaert
+# Phnom Penh, Cambodia, March 2013
+# Licensed under the General Public License (GPL)
+#-------------------------------------------------------
+
+source "$UTIL_FOLDER/args.fix-whitespace"
+folder="$1"
+source "$UTIL_FOLDER/folder.assert-exists"
+folder_assert_exists "$folder"
+
+folderBase=$(basename "$folder")
+
+subCommandFolder="$folder/src/usr/share/$folderBase-core/subcommands"
+if [ ! -d "$subCommandFolder" ] ; then
+        echo "ERROR: cannot find folder $subCommandFolder" >&2
+        exit 1
+fi
+
+helpFolder="$folder/src/usr/share/$folderBase-core/help"
+if [ ! -d "$helpFolder" ] ; then
+        echo "ERROR: cannot find folder $helpFolder" >&2
+        exit 1
+fi
+
+
+while read file; do 
+	fileBase=$(basename $file);
+        helpFile="$helpFolder/$fileBase.txt"
+        if [ ! -f "$helpFile" ] ; then
+        	touch "$helpFile"
+        fi
+done < <(find "$subCommandFolder" -type f)
+

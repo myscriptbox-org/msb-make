@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+#-------------------------------------------------------
+# Written by Erik Poupaert
+# Phnom Penh, Cambodia, March 2013
+# Licensed under the General Public License (GPL)
+#-------------------------------------------------------
+
+function conf_field_validate
+{
+        field="$1"
+
+        #check if it contains a space
+        if [[ "$field" != "${field% *}" ]]; then
+                echo "ERROR: conf field may not contain spaces." >&2
+                exit 1
+        fi
+}
+

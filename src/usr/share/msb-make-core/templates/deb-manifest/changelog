@@ -1,0 +1,5 @@
+=package= (=version=) =release=; urgency==urgency=
+
+  * Version =version=
+
+ -- =author_name= <=email_signature=>  =build_date=

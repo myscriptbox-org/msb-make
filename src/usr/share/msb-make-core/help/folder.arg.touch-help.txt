@@ -1,0 +1,3 @@
+This command generates empty a help file for each script file in the subcommands folder, for which no help file is already available. Example:{br}
+{program} myscript -touch-help
+

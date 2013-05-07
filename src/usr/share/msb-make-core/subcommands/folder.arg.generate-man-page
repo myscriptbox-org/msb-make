@@ -1,0 +1,105 @@
+#!/usr/bin/env bash
+#-------------------------------------------------------
+# Written by Erik Poupaert
+# Phnom Penh, Cambodia, March 2013
+# Licensed under the General Public License (GPL)
+#-------------------------------------------------------
+
+source "$UTIL_FOLDER/args.fix-whitespace"
+folder="$1"
+source "$UTIL_FOLDER/folder.assert-exists"
+folder_assert_exists "$folder"
+folderBase=$(basename "$folder")
+
+manFolder="$folder/man-src"
+source "$folder/build.conf"
+
+function replace_template_vars
+{
+	sed  -e "s/{program}/"'\\fB'"$program"'\\fR'"/g" \
+	-e "s/{author_name}/$author_name/g" \
+	-e "s/{author_email}/$author_email/g" \
+	-e 's/{b}/\\fB/g' -e 's|{/b}|\\fR|g' \
+	-e 's/{i}/\\fI/g' -e 's|{/i}|\\fR|g' \
+	-e 's/\[\[\(.*\)\]\]/.IP \\fB\1\\fR/g' \
+	-e 's/{br}/'"\n"'.br/' \
+	| \
+	sed -e 's/-/\\-/g' -e 's/'\''/\\'\''/g'
+}
+
+synopsisGenerated='false'
+optionsGenerated='false'
+
+program="$folderBase"
+#print preamble
+echo '.\"' "Man page for $program"
+echo '.\"' "Contact ${author_email} to correct errors."
+echo '.TH man 1 "'$(date +'%e %b %Y')'"' \
+ ' "version '$(cat "$folder/src/usr/share/${program}-core/VERSION" > /dev/null 2>&1 )'"'\
+' "'${program}' man page"'
+#print sections
+while read fileName; do
+        #determine section and section number
+	base=$(basename "$fileName")
+	sectionNumber=${base%%.*}
+	title=${base#*.}
+
+        #print synopsis
+        if [ $sectionNumber -gt 1 ] && [ "$synopsisGenerated" = 'false' ] ; then
+                echo ".SH SYNOPSIS"
+                echo "\fB$program\fR [objectPath] [ objectId1 ... objectIdN ] -action [ actionArg1 .. actionArgM]"
+                echo
+                synopsisGenerated='true'
+        fi
+
+        #print options
+        if [ $sectionNumber -gt 3 ] && [ "$optionsGenerated" = 'false' ] ; then
+                helpFolder="$folder/src/usr/share/${program}-core/help"
+                echo ".SH OPTIONS"
+                echo
+                echo ".IP \fB--help\fR"
+                echo "shows the general help paragraph."
+                echo
+                echo '.IP "\fB[objectpath] --help"\fR'
+                echo "shows general help for the object path."
+                echo
+                echo ".IP \\fB--version\\fR"
+                echo "shows the program\'s version."
+                echo
+                echo ".IP \\fB--license\\fR"
+                echo "shows the program\'s license."
+                echo
+                while read objectPath; do
+                        while read f; do
+	                synopsis=$(echo "$f" | sed -e 's/^'$objectPath'\.//' | sed -e 's/^arg\./[obj] /' |  \
+		                 sed -e 's/\.txt$//')
+                        synopsisNoArgs=$(echo "$synopsis" | sed -e 's/\.arg$//' |  sed -e 's/\.args$//')
+                        #if $synopsisNoArgs still has a dot, it belongs to a longer objectPath
+                        dotFound=$(echo "$synopsisNoArgs" | grep -E '\.')
+                        if [ "$dotFound" = "" ] ; then
+                                synopsis=$(echo "$synopsis" | sed -e 's/\.arg$/ [arg]/' |  sed -e 's/\.args$/ [args]/')
+                                subCommand=$(echo "$synopsis" | sed -e 's/\[.*\] //g' -e 's/\[.*\]//g')
+                                synopsis=$(echo "$synopsis" | sed -e 's/'"$subCommand"'/-'"$subCommand"'/')
+	                        echo ".IP \"\\fB$objectPath $synopsis\"\\fR"
+	                        cat "$helpFolder/$f" | replace_template_vars
+                        fi
+                        done < <(find "$helpFolder" -type f -exec basename {} \; | grep -e "^$objectPath\.")
+                done < <(find "$helpFolder" -type f -exec basename {} \; | \
+                        sed 's/\.txt$//' | sed 's/\.arg$//' | sed 's/\.args$//' | sed 's/\(.*\)\..*$/\1/' | \
+                         sed 's/\.arg$//' | sort | uniq)
+                optionsGenerated='true'
+        fi
+        #print the current section
+	echo ".SH $title "
+	cat "$fileName" | replace_template_vars
+done < <(find "$manFolder" -mindepth 1 -maxdepth 1 -type f | sort )
+#generate author section
+echo ".SH AUTHOR"
+echo "${author_name} <${author_email}>"
+echo 
+echo ".SH REPORTING-BUGS"
+echo "Report bugs to: ${report_bugs}"
+echo 
+echo ".SH COPYRIGHT"
+echo "Licensed under ${license}"
+

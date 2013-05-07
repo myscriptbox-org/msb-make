@@ -1,0 +1,5 @@
+This program bypasses the entire packaging system to install a program locally. Example:{br}
+sudo {program} folder myprogram -deploy-local{br}
+This command must be executed as root.
+
+
