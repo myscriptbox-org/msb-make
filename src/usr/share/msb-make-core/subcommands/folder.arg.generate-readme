@@ -31,7 +31,7 @@ optionsGenerated='false'
 
 program="$folderBase"
 #main title
-echo "# man page for $program."
+echo "# man page for $program"
 #print sections
 while read fileName; do
         #determine section and section number
