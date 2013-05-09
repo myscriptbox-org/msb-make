@@ -1,3 +1,3 @@
 This command shows the paths registered in the ~/.bashrc execution path. Synopsis:{b}
-{command} bashrc -show-paths
+{program} bashrc -show-paths
 

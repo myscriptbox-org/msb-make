@@ -12,7 +12,7 @@ folder_assert_exists "$folder"
 base=$(basename "$folder")
 
 #generate readme
-$THIS_SCRIPT folder "$folder" -generate-readme > "$folder/README.md"
+$THIS_SCRIPT folder "$folder" -generate-readme
 
 #copy folders
 src="$folder/src"

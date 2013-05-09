@@ -1,0 +1,3 @@
+This command generates the readme page in markdown (.md) format and outputs it to stdout. Example:{br}
+{program} folder myprogram -generate-readme-stdout
+

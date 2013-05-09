@@ -1,4 +1,4 @@
-# man page for msb-make.
+# man page for msb-make
 ## NAME 
 **msb-make** scaffolds a script folder, optionally populates it with a router and packages it for publication to a debian repository.
 ## SYNOPSIS
@@ -48,12 +48,12 @@ This command checks if all the existing paths registered are still valid, and re
 
 ### bashrc -remove-path [arg]
 This command removes a folder from the execution path. Example:  
-{command} bashrc -remove-path myprogram  
+**msb-make** bashrc -remove-path myprogram  
 The 'myprogram' argument should be a folder containing a script.
 
 ### bashrc -show-paths
 This command shows the paths registered in the ~/.bashrc execution path. Synopsis:**
-{command} bashrc -show-paths
+**msb-make** bashrc -show-paths
 
 ### bashrc -add-path [arg]
 This command adds a folder to the ~/.bashrc, so that you can execute the program in the folder without specifying its path. Example:  
@@ -84,7 +84,7 @@ This command generates the manpage for a program folder. This command is used by
 **msb-make** folder myprogram -generate-man-page
 
 ### folder [obj] -generate-readme
-This command generates the readme page in markdown (.md) format. It is called by the **build** command. Example:  
+This command generates the readme page in markdown (.md) format and saves it in the program's folder. It is called by the **build** command. Example:  
 **msb-make** folder myprogram -generate-readme
 
 ### folder [obj] -show-version
@@ -119,6 +119,10 @@ This command removes the router from a program folder. Example:
 ### folder [obj] -show-license
 This command shows the license installed. Example:  
 **msb-make** folder myscript -show-license
+
+### folder [obj] -generate-readme-stdout
+This command generates the readme page in markdown (.md) format and outputs it to stdout. Example:  
+**msb-make** folder myprogram -generate-readme-stdout
 
 ### folder [obj] -undeploy-local
 This command removes a rapid local deployment of a folder. Example:  
@@ -242,3 +246,4 @@ Report bugs to: erik@sankuru.biz
 
 # COPYRIGHT
 Licensed under GPL
+folder/generate-readme-stdout executed.
