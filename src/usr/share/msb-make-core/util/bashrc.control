@@ -21,12 +21,8 @@ function bashrc_control
 		folder_assert_exists "$folder"
 	fi
 
-	if [ "$folder" = "." ] ; then
-		folder="$PWD"
-	else
-		if [ ! ${folder:0:1} = "/" ]; then
-			folder="$PWD/$folder"
-		fi
+	if [ ! ${folder:0:1} = "/" ] ; then
+		folder="$PWD/$folder"
 	fi
 
 	base=$(basename "$folder")
