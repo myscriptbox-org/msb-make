@@ -9,5 +9,5 @@ source "$UTIL_FOLDER/args.fix-whitespace"
 folder="$1"
 source "$UTIL_FOLDER/folder.assert-exists"
 folder_assert_exists "$folder"
-find "$folder"
+find "$folder" |  grep -v '\.git' | sort
 
