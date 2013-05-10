@@ -7,7 +7,7 @@ show-conf-fields
 show-man-page
 license-exists
 generate-man-page
-generate-readme
+generate-readme-stdout
 generate-deb-changelog
 generate-deb-control
 generate-deb-dirs

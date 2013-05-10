@@ -96,5 +96,5 @@ echo "## REPORTING-BUGS"
 echo "Report bugs to: ${report_bugs}"
 echo 
 echo "# COPYRIGHT"
-echo "Licensed under ${license}"
+echo "Licensed under: ${license}"
 

@@ -101,5 +101,5 @@ echo ".SH REPORTING-BUGS"
 echo "Report bugs to: ${report_bugs}"
 echo 
 echo ".SH COPYRIGHT"
-echo "Licensed under ${license}"
+echo "Licensed under: ${license}"
 
