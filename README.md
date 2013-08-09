@@ -42,18 +42,14 @@ shows the program's version.
 ### --license
 shows the program's license.
 
-### bashrc -remove-invalid-paths
-This command checks if all the existing paths registered are still valid, and removes the invalid ones. Example:  
-**msb-make** bashrc -remove-invalid-paths
-
 ### bashrc -remove-path [arg]
 This command removes a folder from the execution path. Example:  
 **msb-make** bashrc -remove-path myprogram  
 The 'myprogram' argument should be a folder containing a script.
 
-### bashrc -show-paths
-This command shows the paths registered in the ~/.bashrc execution path. Synopsis:**
-**msb-make** bashrc -show-paths
+### bashrc -remove-invalid-paths
+This command checks if all the existing paths registered are still valid, and removes the invalid ones. Example:  
+**msb-make** bashrc -remove-invalid-paths
 
 ### bashrc -add-path [arg]
 This command adds a folder to the ~/.bashrc, so that you can execute the program in the folder without specifying its path. Example:  
@@ -61,52 +57,13 @@ This command adds a folder to the ~/.bashrc, so that you can execute the program
 This example will add the gpg-man folder to your path. You will need to source .bashrc (or re-open the terminal) again, for the changes to take effect:  
 source ~/.bashrc
 
-### folder [obj] -generate-deb-control
-This program generate the Debian manifest control file. It is used by the **build** command. Example  :
-**msb-make** folder myprogram -generate-deb-control
+### bashrc -show-paths
+This command shows the paths registered in the ~/.bashrc execution path. Synopsis:**
+**msb-make** bashrc -show-paths
 
-### folder [obj] -deploy-local
-This program bypasses the entire packaging system to install a program locally. Example:  
-sudo **msb-make** folder myprogram -deploy-local  
-This command must be executed as root.
-
-
-### folder [obj] -show-man-page
-This command shows the manpage for a program folder. Example:  
-**msb-make** folder myscript -show-man-page
-
-### folder [obj] -show-files
-This command lists the files inside the program folder. Example:  
-**msb-make** folder myscript -show-files
-
-### folder [obj] -generate-man-page
-This command generates the manpage for a program folder. This command is used by the **build** command. Example:  
-**msb-make** folder myprogram -generate-man-page
-
-### folder [obj] -generate-readme
-This command generates the readme page in markdown (.md) format and saves it in the program's folder. It is called by the **build** command. Example:  
-**msb-make** folder myprogram -generate-readme
-
-### folder [obj] -show-version
-This command shows the version of a program folder. Example:  
-**msb-make** folder myscript -show-version
-
-### folder [obj] -fix-exec-perms
-This command fixes all the execute permissions in the subcommands folder. Example:  
-**msb-make** folder myscript -fix-exec-perms
-
-### folder [obj] -license-exists
-This command checks if the folder contains a license file. Example:  
-**msb-make** folder myprogram -license-exists  
-This command returns 'yes' if the license file exists and 'no' if it does not.
-
-### folder [obj] -rename [arg]
-This program renames a program folder and the internal files and folders that were named accordingly. Example:  
-**msb-make** folder myscript -rename mynewscript
-
-### folder [obj] -generate-deb-dirs
-This command generates the Debian 'dirs' manifest file. It is used by the **build** command. Example:  
-**msb-make** folder myprogram -generate-deb-dirs
+### folder [obj] -purge-help
+This command removes all empty help files from the help folder. Example:  
+**msb-make** folder myprogram -purge-help
 
 ### folder [obj] -remove-license
 This command removes the license file from a program folder. Example:  
@@ -116,18 +73,51 @@ This command removes the license file from a program folder. Example:
 This command removes the router from a program folder. Example:  
 **msb-make** folder myprogram -remove-router
 
-### folder [obj] -show-license
-This command shows the license installed. Example:  
-**msb-make** folder myscript -show-license
+### folder [obj] -generate-deb-dirs
+This command generates the Debian 'dirs' manifest file. It is used by the **build** command. Example:  
+**msb-make** folder myprogram -generate-deb-dirs
 
-### folder [obj] -generate-readme-stdout
-This command generates the readme page in markdown (.md) format and outputs it to stdout. Example:  
-**msb-make** folder myprogram -generate-readme-stdout
+### folder [obj] -license-exists
+This command checks if the folder contains a license file. Example:  
+**msb-make** folder myprogram -license-exists  
+This command returns 'yes' if the license file exists and 'no' if it does not.
 
 ### folder [obj] -undeploy-local
 This command removes a rapid local deployment of a folder. Example:  
 sudo **msb-make** folder myscript -undeploy-local  
 This command must be executed as root.
+
+### folder [obj] -generate-man-page
+This command generates the manpage for a program folder. This command is used by the **build** command. Example:  
+**msb-make** folder myprogram -generate-man-page
+
+### folder [obj] -delete
+This command deletes a program folder. Example  :
+**msb-make** folder myprogram -delete
+
+### folder [obj] -generate-readme
+This command generates the readme page in markdown (.md) format and saves it in the program's folder. It is called by the **build** command. Example:  
+**msb-make** folder myprogram -generate-readme
+
+### folder [obj] -show-version
+This command shows the version of a program folder. Example:  
+**msb-make** folder myscript -show-version
+
+### folder [obj] -generate-deb-control
+This program generate the Debian manifest control file. It is used by the **build** command. Example  :
+**msb-make** folder myprogram -generate-deb-control
+
+### folder [obj] -deb-copy
+This command is used by the **-build** command to generate the readme file, generate the debian manifest files, and copy the script files to the DEBIAN package folder. Example:  
+**msb-make** folder myprogram -deb-copy  
+
+### folder [obj] -fix-exec-perms
+This command fixes all the execute permissions in the subcommands folder. Example:  
+**msb-make** folder myscript -fix-exec-perms
+
+### folder [obj] -show-conf-fields
+This command shows the configuration fields available in the 'build.conf' file with their values. Example:  
+**msb-make** folder myscript -show-conf-fields
 
 ### folder [obj] -scaffold
 This command scaffolds a given program folder. If the folder does not exist, the command will create it. It creates:  
@@ -157,13 +147,21 @@ sample/src/etc/sample.d: the configuration folder for the program
 This command generates empty a help file for each script file in the subcommands folder, for which no help file is already available. Example:  
 **msb-make** myscript -touch-help
 
-### folder [obj] -delete
-This command deletes a program folder. Example  :
-**msb-make** folder myprogram -delete
+### folder [obj] -show-license
+This command shows the license installed. Example:  
+**msb-make** folder myscript -show-license
 
-### folder [obj] -deb-copy
-This command is used by the **-build** command to generate the readme file, generate the debian manifest files, and copy the script files to the DEBIAN package folder. Example:  
-**msb-make** folder myprogram -deb-copy  
+### folder [obj] -show-man-page
+This command shows the manpage for a program folder. Example:  
+**msb-make** folder myscript -show-man-page
+
+### folder [obj] -show-files
+This command lists the files inside the program folder. Example:  
+**msb-make** folder myscript -show-files
+
+### folder [obj] -generate-readme-stdout
+This command generates the readme page in markdown (.md) format and outputs it to stdout. Example:  
+**msb-make** folder myprogram -generate-readme-stdout
 
 ### folder [obj] -set-standard-license [arg]
 This command sets a standard license on the program. Example:  
@@ -171,13 +169,15 @@ This command sets a standard license on the program. Example:
 This command installs the GPL license file inside the program. If you need to install a custom license file, manually copy the custom license to the program's core folder. The command also inscribes the license name in the 'build.conf' file. You can verify the license inscribed in the 'build.conf' file with the command:  
 **msb-make** folder.conf-field myscript license -show  
 
-### folder [obj] -purge-help
-This command removes all empty help files from the help folder. Example:  
-**msb-make** folder myprogram -purge-help
+### folder [obj] -deploy-local
+This program bypasses the entire packaging system to install a program locally. Example:  
+sudo **msb-make** folder myprogram -deploy-local  
+This command must be executed as root.
 
-### folder [obj] -show-conf-fields
-This command shows the configuration fields available in the 'build.conf' file with their values. Example:  
-**msb-make** folder myscript -show-conf-fields
+
+### folder [obj] -rename [arg]
+This program renames a program folder and the internal files and folders that were named accordingly. Example:  
+**msb-make** folder myscript -rename mynewscript
 
 ### folder.account.domain.distrib.release.arg.arg.arg.arg [obj] -unpublish
 This command unpublishes a folder from a remote server. Synopsis:  
@@ -207,13 +207,13 @@ To set a value of 'null' preceded by k times '|', prefix the '|' character k+1 t
 This command shows the value of a configuration field in a folder. Example:  
 **msb-make** folder.conf-field myscript email_signature -show
 
-### folder.release.arg [obj] -clean
-This command removes the packages built. Example:  
-**msb-make** folder.release myscript precise -clean
-
 ### folder.release.arg [obj] -generate-deb-changelog
 This command generates a Debian manifest changelog file. It is called automatically by the 'build' command. Example:  
 **msb-make** folder.release myscript precise -generate-deb-changelog
+
+### folder.release.arg [obj] -clean
+This command removes the packages built. Example:  
+**msb-make** folder.release myscript precise -clean
 
 ### folder.release.arg [obj] -build
 This command builds the package for a folder for a particular release. Example:  

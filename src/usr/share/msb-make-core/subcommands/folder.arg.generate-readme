@@ -14,5 +14,6 @@ folderBase=$(basename "$folder")
 manFolder="$folder/man-src"
 source "$folder/build.conf"
 
-$THIS_SCRIPT folder "$folder" -generate-readme-stdout > "$folder/README.md"
-
+if [ ! -f "$manFolder/manual.txt" ] ; then
+	$THIS_SCRIPT folder "$folder" -generate-readme-stdout > "$folder/README.md"
+fi

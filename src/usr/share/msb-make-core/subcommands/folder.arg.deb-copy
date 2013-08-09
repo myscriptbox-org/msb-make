@@ -12,7 +12,9 @@ folder_assert_exists "$folder"
 base=$(basename "$folder")
 
 #generate readme
-$THIS_SCRIPT folder "$folder" -generate-readme
+if [ ! -f "$manFolder/manual.txt" ] ; then
+	$THIS_SCRIPT folder "$folder" -generate-readme
+fi
 
 #copy folders
 src="$folder/src"
@@ -28,7 +30,15 @@ done
 source "$folder/build.conf"
 
 #generate man page
+
 mkdir -p "$build/usr/share/man"
-$THIS_SCRIPT folder "$folder" -generate-man-page | \
-        gzip -c  > "$build/usr/share/man/man${man_section}/${base}.${man_section}.gz"
+manFolder="$folder/man-src"
+manFile="$build/usr/share/man/man${man_section}/${base}.${man_section}.gz"
+
+if [ ! -f "$manFolder/manual.txt" ] ; then
+	$THIS_SCRIPT folder "$folder" -generate-man-page | \
+		gzip -c  > $manFile
+else
+	cat $manFolder/manual.txt | gzip -c  > $manFile
+fi
 

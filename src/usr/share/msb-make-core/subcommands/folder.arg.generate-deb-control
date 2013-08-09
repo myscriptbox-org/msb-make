@@ -11,11 +11,13 @@ source "$UTIL_FOLDER/folder.assert-exists"
 folder_assert_exists "$folder"
 base=$(basename "$folder")
 source "$folder/build.conf"
-synopsis=$(cat "$folder/man-src/1.NAME" | sed  -e "s/{program}/$base/g" \
+if [ -f "$folder/man-src/1.NAME" ] ; then
+	synopsis=$(cat "$folder/man-src/1.NAME" | sed  -e "s/{program}/$base/g" \
 		        -e 's/{b}//g' -e 's|{/b}||g' \
 		        -e 's/{i}//g' -e 's|{/i}||g' \
 		        -e 's/{br}//'
-)
+	)
+fi
 
 if [ "$synopsis" = "" ] ; then
 	synopsis="$base"
