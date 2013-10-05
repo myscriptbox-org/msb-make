@@ -4,7 +4,7 @@
 # Phnom Penh, Cambodia, March 2013
 # Licensed under the General Public License (GPL)
 #-------------------------------------------------------
-
+source "$UTIL_FOLDER/msb.debug"
 while read path ; do
 	if [ ! -d "$path" ] ; then
 		$THIS_SCRIPT bashrc -unregister "$path" > /dev/null
