@@ -37,6 +37,7 @@ function processSubFolder
 dirs=$(processSubFolder "$dirs" "$folder" 'etc')
 dirs=$(processSubFolder "$dirs" "$folder" 'usr/bin')
 dirs=$(processSubFolder "$dirs" "$folder" "usr/share/${base}-core")
+dirs=$(processSubFolder "$dirs" "$folder" 'var')
 
 source "$folder/build.conf"
 dirs="$dirs usr/share/man/man${man_section}"
