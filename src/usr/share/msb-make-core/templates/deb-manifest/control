@@ -2,7 +2,7 @@ Source: =package=
 Section: =deb_section=
 Priority: =deb_priority=
 Maintainer: =name_signature= <=email_signature=>
-Build-Depends: debhelper (>= 7), build-essential, msb-make =deb_other_build_dependencies=
+Build-Depends: debhelper (>= 7), build-essential, =deb_other_build_dependencies=
 Standards-Version: 3.9.3.1
 Homepage: =home_page=
 
