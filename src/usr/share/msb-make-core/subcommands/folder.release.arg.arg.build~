@@ -34,9 +34,6 @@ cp "$folder/install/postrm" "$build/$base.postrm"
 #execute the build:
 currPWD="$PWD"
 cd "$folder"
-if [ -n "$architecture" ] ; then
-	architecture="amd64"
-fi
 fakeroot -- dpkg-buildpackage -a$architecture -F -I.git > /dev/null
 cd "$currPWD"
 rm -rf "$build"
