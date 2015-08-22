@@ -1,0 +1,18 @@
+Source: =package=
+Section: =deb_section=
+Priority: =deb_priority=
+Maintainer: =name_signature= <=email_signature=>
+<<<<<<< HEAD
+Build-Depends: debhelper (>= 7), build-essential =deb_other_build_dependencies=
+=======
+Build-Depends: debhelper (>= 7), build-essential, =deb_other_build_dependencies=
+>>>>>>> 4e56519dfcdf40b895cdf47fae519ee9488b8f29
+Standards-Version: 3.9.3.1
+Homepage: =home_page=
+
+Package: =package=
+Architecture: all
+Depends: =deb_dependencies=
+Replaces: =deb_replaces=
+Description: =synopsis=
+
