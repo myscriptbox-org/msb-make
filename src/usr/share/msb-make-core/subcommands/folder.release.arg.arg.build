@@ -40,5 +40,5 @@ fi
 fakeroot -- dpkg-buildpackage -a$architecture -F -I.git > /dev/null
 cd "$currPWD"
 rm -rf "$build"
-rm "$folder/build-stamp"
+rm -f "$folder/build-stamp"
 

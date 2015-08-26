@@ -16,7 +16,7 @@ version=$(cat "$folder/src/usr/share/${base}-core/VERSION")
 buildDate=$(date -R)
 debChangeLog="$CORE_FOLDER/templates/deb-manifest/changelog"
 cat "$debChangeLog" | sed -e 's|=package=|'"$base"'|g' \
-			-e 's|=version=|'"${version}"'|g' \
+			-e 's|=version=|'"${version}-${release}"'|g' \
                         -e 's|=release=|'"$release"'|g' \
                         -e 's|=name_signature=|'"${name_signature}"'|g' \
                         -e 's|=email_signature=|'"${email_signature}"'|g' \
