@@ -84,7 +84,7 @@ while read fileName; do
 	                        cat "$helpFolder/$f" | replace_template_vars
                         fi
                         done < <(find "$helpFolder" -type f -exec basename {} \; | grep -e "^$objectPath\.")
-                done < <(find "$helpFolder" -type f -exec basename {} \; | \
+                done < <(find "$helpFolder" -type f -exec basename {} \; 2> /dev/null | \
                         sed 's/\.txt$//' | sed 's/\.arg$//' | sed 's/\.args$//' | sed 's/\(.*\)\..*$/\1/' | \
                          sed 's/\.arg$//' | sort | uniq)
                 optionsGenerated='true'
